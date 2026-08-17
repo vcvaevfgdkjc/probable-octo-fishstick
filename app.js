@@ -134,10 +134,15 @@ function mergeSeedData() {
     return;
   }
 
+  const seedVersion = seed.version || "unversioned";
   Object.entries(seed.entries).forEach(([date, seedEntry]) => {
     const current = diary.entries[date];
-    if (!current || new Date(seedEntry.updatedAt || 0) > new Date(current.updatedAt || 0)) {
-      diary.entries[date] = normalizeEntry(date, seedEntry);
+    if (
+      !current ||
+      current.seedVersion !== seedVersion ||
+      new Date(seedEntry.updatedAt || 0) > new Date(current.updatedAt || 0)
+    ) {
+      diary.entries[date] = normalizeEntry(date, seedEntry, seedVersion);
     }
   });
 
@@ -155,13 +160,14 @@ function ensureStarterToday() {
   };
 }
 
-function normalizeEntry(date, entry) {
+function normalizeEntry(date, entry, seedVersion = "") {
   return {
     date: entry.date || date,
     questions: Array.isArray(entry.questions) ? entry.questions : [],
     learning: Array.isArray(entry.learning) ? entry.learning : [],
     notes: Array.isArray(entry.notes) ? entry.notes : [],
     updatedAt: entry.updatedAt || new Date().toISOString(),
+    seedVersion,
   };
 }
 
