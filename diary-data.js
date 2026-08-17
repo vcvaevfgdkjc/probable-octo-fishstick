@@ -1,5 +1,5 @@
 window.FELIX_DIARY_SEED = {
-  version: "2026-08-17-summary-v2",
+  version: "2026-08-17-summary-v3",
   entries: {
     "2026-08-17": {
       date: "2026-08-17",
