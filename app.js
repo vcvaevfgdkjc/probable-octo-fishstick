@@ -135,6 +135,7 @@ function mergeSeedData() {
   }
 
   const seedVersion = seed.version || "unversioned";
+  let appliedSeedDate = "";
   Object.entries(seed.entries).forEach(([date, seedEntry]) => {
     const current = diary.entries[date];
     if (
@@ -143,11 +144,13 @@ function mergeSeedData() {
       new Date(seedEntry.updatedAt || 0) > new Date(current.updatedAt || 0)
     ) {
       diary.entries[date] = normalizeEntry(date, seedEntry, seedVersion);
+      appliedSeedDate = date;
     }
   });
 
   if (Object.keys(diary.entries).length === 0) ensureStarterToday();
-  persist();
+  if (appliedSeedDate) diary.lastActiveDate = appliedSeedDate;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(diary));
 }
 
 function ensureStarterToday() {
