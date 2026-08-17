@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Felix的学习日记</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="日志日期">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">F</div>
+          <div>
+            <p class="eyebrow">Agent Learning Log</p>
+            <h1>Felix的学习日记</h1>
+          </div>
+        </div>
+
+        <div class="today-panel">
+          <p class="panel-label">今天</p>
+          <p id="todayText" class="today-text"></p>
+          <button id="newTodayBtn" class="primary-btn" type="button">
+            <span aria-hidden="true">+</span>
+            新建/打开今日
+          </button>
+        </div>
+
+        <div class="date-list-head">
+          <span>每日页面</span>
+          <button id="addDayBtn" class="icon-btn" type="button" title="新增日期" aria-label="新增日期">+</button>
+        </div>
+        <nav id="entryList" class="entry-list" aria-label="日志列表"></nav>
+      </aside>
+
+      <main class="workspace">
+        <section class="topbar" aria-label="当前日志操作">
+          <div>
+            <p class="eyebrow">每日一页，简洁记录</p>
+            <h2 id="pageTitle">学习日志</h2>
+          </div>
+          <div class="top-actions">
+            <button id="exportBtn" class="ghost-btn" type="button">导出</button>
+            <label class="ghost-btn file-btn">
+              导入
+              <input id="importInput" type="file" accept="application/json">
+            </label>
+            <button id="deleteBtn" class="danger-btn" type="button">删除本页</button>
+          </div>
+        </section>
+
+        <section class="editor-layout">
+          <form id="logForm" class="editor" autocomplete="off">
+            <label class="field">
+              <span>日期</span>
+              <input id="dateInput" type="date" required>
+            </label>
+
+            <label class="field">
+              <span>今天在 Codex 上问了什么</span>
+              <textarea id="questionsInput" rows="7" placeholder="每行一条，例如：怎么建立自动学习日志？"></textarea>
+            </label>
+
+            <label class="field">
+              <span>学到的内容</span>
+              <textarea id="learningInput" rows="8" placeholder="每行一条，例如：Markdown 可以按日期组织每日页面。"></textarea>
+            </label>
+
+            <label class="field">
+              <span>备注</span>
+              <textarea id="notesInput" rows="5" placeholder="写下必要备注；没有就留空。"></textarea>
+            </label>
+
+            <div class="form-actions">
+              <p id="saveState" class="save-state" role="status">已准备</p>
+              <button class="primary-btn" type="submit">
+                <span aria-hidden="true">✓</span>
+                保存修改
+              </button>
+            </div>
+          </form>
+
+          <aside class="preview" aria-label="日志预览">
+            <div class="preview-paper">
+              <p class="preview-date" id="previewDate"></p>
+              <h3 id="previewTitle"></h3>
+              <div class="preview-block">
+                <h4>今日问题</h4>
+                <ul id="previewQuestions"></ul>
+              </div>
+              <div class="preview-block">
+                <h4>学习内容</h4>
+                <ul id="previewLearning"></ul>
+              </div>
+              <div class="preview-block">
+                <h4>备注</h4>
+                <ul id="previewNotes"></ul>
+              </div>
+            </div>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="dayDialog">
+      <form method="dialog" class="dialog-card">
+        <h3>新增日志页面</h3>
+        <label class="field">
+          <span>选择日期</span>
+          <input id="dialogDateInput" type="date">
+        </label>
+        <div class="dialog-actions">
+          <button class="ghost-btn" value="cancel" type="submit">取消</button>
+          <button id="confirmAddDayBtn" class="primary-btn" value="confirm" type="button">创建</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="diary-data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
